@@ -1,7 +1,7 @@
 "use strict";
 const Alexa = require("ask-sdk-core");
 
-let lovefmDirective = {
+const lovefmDirective = {
 	type: "AudioPlayer.Play",
 	playBehavior: "REPLACE_ALL",
 	audioItem: {
@@ -13,7 +13,7 @@ let lovefmDirective = {
 		},
 		metadata: {
 			title: "Love FM Emit",
-			subtitle: "LOVE FM: Ogni canzone, un\'emozione",
+			subtitle: "LOVE FM: Ogni canzone, un'emozione",
 			art: {
 				sources: [
 					{
@@ -42,6 +42,7 @@ const PlayIntentHandler = {
 	},
 	handle(handlerInput) {
 		return handlerInput.responseBuilder
+			.speak('Playing Love FM')
 			.addDirective(lovefmDirective).getResponse();
 	},
 };
@@ -49,12 +50,15 @@ const PlayIntentHandler = {
 // Stop Love FM
 const CancelIntentHandler = {
 	canHandle(handlerInput) {
-			return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest' &&
-			handlerInput.requestEnvelope.request.intent.name === 'CancelIntent'
+		const request = handlerInput.requestEnvelope.request;
+		return request.type === 'IntentRequest' && (request.intent.name === 'AMAZON.StopIntent' || request.intent.name === 'AMAZON.CancelIntent' || 'AMAZON.PauseIntent')
 	},
 	handle(handlerInput) {
 		return handlerInput.responseBuilder
-		.addDirective({ type: "AudioPlayer.Stop" }).getResponse();
+		.speak('Stopping Love FM')
+		.addDirective({ type: "AudioPlayer.Stop" })
+		.withShouldEndSession(true)
+		.getResponse();
 	}
 };
 
