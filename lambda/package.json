@@ -5,7 +5,8 @@
 	"homepage": "https://github.com/EmilianoTalamo/emit-lovefm-alexa",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"local": "alexa-skill-local"
   },
   "author": "Emiliano Tálamo",
   "license": "ISC",
